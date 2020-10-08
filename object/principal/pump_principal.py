@@ -1,20 +1,22 @@
 from time import sleep
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
 
 
 # GPIO setup
-GPIO.setmode(GPIO.BCM)
+# GPIO.setmode(GPIO.BCM)
 
 
 
 class Pump():
-    def __init__(self,pin):
+    def __init__(self,pin,slide):
+        self.slide=slide
+        self.color="%"
         self.state = "un_active"
         self.order = "%"
         self.pin=pin
-        GPIO.setup(self.pin, GPIO.OUT)
-        GPIO.output(self.pin, GPIO.HIGH)
+        # GPIO.setup(self.pin, GPIO.OUT)
+        # GPIO.output(self.pin, GPIO.HIGH)
 
 
     def which_state(self):
@@ -42,13 +44,11 @@ class Pump():
 
     def pump_action(self,value):
         if value==-1 :
-            GPIO.output(self.pin, GPIO.HIGH)
+            print("pump off")
+            # GPIO.output(self.pin, GPIO.HIGH)
         else :
-            GPIO.output(self.pin, GPIO.LOW)
+            print("pump on")
+            # GPIO.output(self.pin, GPIO.LOW)
 
-pump1 = Pump(6)
-pump2 = Pump(5)
-pump3 = Pump(11)
-pump4 = Pump(9)
-pump5 = Pump(10)
+
 

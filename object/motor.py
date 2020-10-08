@@ -46,8 +46,11 @@ def operation_to_reach(x1,y1,alpha1,x2,y2,alpha2):#what to do ? same code as las
 
 
 class Motors() :
-    def __init__(self) :
+    def __init__(self,x,y,alpha) :
         self.state="un_active"
+        self.x=x
+        self.y=y
+        self.alpha=alpha
         self.rot1="%"
         self.trans="%"
         self.rot2="%"
@@ -133,14 +136,15 @@ class Motors() :
             self.state="un_active"
             self.done="%" 
     
-    def command(self,x,y,alpha,x2,y2,alpha2) :
+    def command(self,x2,y2,alpha2) :
         
-        self.rot1,self.trans,self.rot2=operation_to_reach(x,y,alpha,x2,y2,alpha2)
+        self.rot1,self.trans,self.rot2=operation_to_reach(self.x,self.y,self.alpha,x2,y2,alpha2)
         print(self.rot1,self.trans,self.rot2)
+        self.x, self.y, self.alpha=x2, y2, alpha2#update the current position
         
-motors=Motors()
+motors=Motors(10,10,45)
 import time
-motors.command(10,10,45,10,10,270)
+motors.command(10,10,270)
 
 while 1 :
     motors.which_state()
