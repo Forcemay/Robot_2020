@@ -146,7 +146,16 @@ class Motors():
         self.rot1, self.trans, self.rot2 = operation_to_reach(self.x, self.y, self.alpha, x2, y2, alpha2)
         self.x2, self.y2, self.alpha2=x2, y2, alpha2
 
+with open('value.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    list = []
 
+
+    for row in reader:
+        if row["Class"]=="Grab" :
+           list.append(row["valeur"])
+    l1=list[0].split("/")
+motors = Motors(int(l1[0]),int(l1[1]),int(l1[2]))
 
 # while 1:
 #     motors.which_state()

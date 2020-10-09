@@ -1,6 +1,7 @@
 from pump_principal import *
 from Slide_principal import *
 from motor_principal import *
+import csv
 class Grab_brain_principal():
     def __init__(self,number):
         self.order="%"
@@ -10,7 +11,19 @@ class Grab_brain_principal():
             self.color2=["green","red","green","red","green"]
         self.state="ini"
         self.counter1=0
-        self.grab1_action=[(1, -1, 10, 0, 0),(1, 1, 10, 0, 0),(1, 1, 0, 0, -180),(1, -1, 10, 0, -180),(1, -1, 10, 0, -180),(1, 1, 0,0,0)]
+        with open('value.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            list = []
+
+
+            for row in reader:
+                if row["Class"]=="Grab" :
+                    list.append(row["valeur"])
+        l1=list[0].split("/")
+        l2=list[1].split("/")
+        l3=list[2].split("/")
+        l4=list[3].split("/")
+        self.grab1_action=[(1, -1, int(l1[0]),int(l1[1]),int(l1[2])),(1, 1,int(l1[0]),int(l1[1]),int(l1[2])),(1, 1, int(l2[0]),int(l2[1]),int(l2[2])),(1, -1, int(l3[0]),int(l3[1]),int(l3[2])),(1, -1, int(l3[0]),int(l3[1]),int(l3[2])),(1, 1, int(l4[0]),int(l4[1]),int(l4[2]))]
         self.counter2=0
 
     def which_state(self) :
@@ -23,6 +36,7 @@ class Grab_brain_principal():
 
     def ini(self):
         if self.order=="grab1":
+
             self.order="%"
             self.state="grab1"
         elif self.order=="grab2":
@@ -87,3 +101,4 @@ class Grab_brain_principal():
 
 
 
+grab_brain_principal=Grab_brain_principal(1)

@@ -1,8 +1,9 @@
 import math
-# import RPi.GPIO as GPIO
+import RPi.Gpio as Gpio
 import time
-#GPIO.cleanup()
-# GPIO.setwarnings(False)
+import csv
+Gpio.cleanup()
+Gpio.setwarnings(False)
 
 
 
@@ -20,11 +21,11 @@ class Slide():  # maybe this one is too much for nothing
         self.state="height"
         # order
         self.order = "%"
-        # GPIO setup
-        # GPIO.setmode(GPIO.BCM)
-        # GPIO.setup(self.enPin,GPIO.OUT)
-        # GPIO.setup(self.stepPin,GPIO.OUT)
-        # GPIO.setup(self.dirPin,GPIO.OUT)
+        Gpio setup
+        Gpio.setmode(Gpio.BCM)
+        Gpio.setup(self.enPin,Gpio.OUT)
+        Gpio.setup(self.stepPin,Gpio.OUT)
+        Gpio.setup(self.dirPin,Gpio.OUT)
 
 
     def which_state(self):
@@ -51,23 +52,29 @@ class Slide():  # maybe this one is too much for nothing
     def move(self, value):
         if value==1:
             print("slide up")
-            # GPIO.output(dirPin, GPIO.HIGH)
+            Gpio.output(dirPin, Gpio.HIGH)
         else :
             print("slide down")
-            # GPIO.output(dirPin, GPIO.LOW)
-        # for k in range(0, self.step):
-        #     GPIO.output(stepPin, GPIO.HIGH)
-        #     time.sleep(0.0009)
-        #     GPIO.output(stepPin, GPIO.LOW)
-        #     time.sleep(0.0009)
+            Gpio.output(dirPin, Gpio.LOW)
+        for k in range(0, self.step):
+            Gpio.output(stepPin, Gpio.HIGH)
+            time.sleep(0.0009)
+            Gpio.output(stepPin, Gpio.LOW)
+            time.sleep(0.0009)
 
 
 
+with open('value.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    l1 = []
 
-#
-# slide.order="low"
-#
-# slide.which_state()
-# slide.order="height"
-#
-# slide.which_state()
+
+    for row in reader:
+        if row["Class"]=="Pin" :
+            if row["Nom"][0]=="s" :
+                l1.append(row["valeur"])
+l2=l1[0].split("/")
+l3=l1[1].split("/")
+slide1 = Slide(int(l2[0]),int(l2[1]),int(l2[2]))
+slide2 = Slide(int(l3[0]),int(l3[1]),int(l3[2]))
+
