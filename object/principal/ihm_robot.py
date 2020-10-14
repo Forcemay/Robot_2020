@@ -57,7 +57,8 @@ class Parameter(tk.Frame):
         OptionList = [
             "Grab",
             "Drop",
-            "Main"
+            "Main",
+            "Pin"
         ]
         self.var = tk.StringVar(self)
         self.var.set("Grab")  # initial value
@@ -85,6 +86,13 @@ class Parameter(tk.Frame):
 
 
     def change2(self):
+        with open('value.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            OptionList2 = []
+
+            for row in reader:
+                if row["Class"] == self.var.get() and row["Nom"]==self.var2.get():
+                    self.variable = row["valeur"]
         self.value_texte = tk.StringVar()
         self.value_texte.set(self.variable)
         label = tk.Label(self, text="changer", font=LARGE_FONT).grid(row=3, column=1, pady=10, padx=10)
