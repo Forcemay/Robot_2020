@@ -1,9 +1,9 @@
 import math
-import RPi.Gpio as Gpio
+# import RPi.Gpio as Gpio
 import time
 import csv
-Gpio.cleanup()
-Gpio.setwarnings(False)
+# Gpio.cleanup()
+# Gpio.setwarnings(False)
 
 
 
@@ -21,11 +21,11 @@ class Slide():  # maybe this one is too much for nothing
         self.state="height"
         # order
         self.order = "%"
-        Gpio setup
-        Gpio.setmode(Gpio.BCM)
-        Gpio.setup(self.enPin,Gpio.OUT)
-        Gpio.setup(self.stepPin,Gpio.OUT)
-        Gpio.setup(self.dirPin,Gpio.OUT)
+        # Gpio setup
+        # Gpio.setmode(Gpio.BCM)
+        # Gpio.setup(self.enPin,Gpio.OUT)
+        # Gpio.setup(self.stepPin,Gpio.OUT)
+        # Gpio.setup(self.dirPin,Gpio.OUT)
 
 
     def which_state(self):
@@ -52,15 +52,15 @@ class Slide():  # maybe this one is too much for nothing
     def move(self, value):
         if value==1:
             print("slide up")
-            Gpio.output(dirPin, Gpio.HIGH)
+            # Gpio.output(dirPin, Gpio.HIGH)
         else :
             print("slide down")
-            Gpio.output(dirPin, Gpio.LOW)
-        for k in range(0, self.step):
-            Gpio.output(stepPin, Gpio.HIGH)
-            time.sleep(0.0009)
-            Gpio.output(stepPin, Gpio.LOW)
-            time.sleep(0.0009)
+            # Gpio.output(dirPin, Gpio.LOW)
+        # for k in range(0, self.step):
+        #     Gpio.output(stepPin, Gpio.HIGH)
+        #     time.sleep(0.0009)
+        #     Gpio.output(stepPin, Gpio.LOW)
+        #     time.sleep(0.0009)
 
 
 

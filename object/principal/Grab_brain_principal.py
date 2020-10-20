@@ -100,5 +100,10 @@ class Grab_brain_principal():
             motors.command(x,y,alpha)
 
 
-
-grab_brain_principal=Grab_brain_principal(1)
+from ihm_robot import *
+col=value_color
+if col=="Rouge":
+    i=1
+else :
+    i=2
+grab_brain_principal=Grab_brain_principal(i)

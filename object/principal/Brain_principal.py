@@ -1,9 +1,10 @@
+
 from pump_principal import *
 from Slide_principal import *
 from motor_principal import *
 from Grab_brain_principal import *
 from Drop_brain_principal import *
-from ihm_robot import *
+from Brain_principal import *
 
 
 class Brain():
@@ -85,14 +86,6 @@ class Brain():
 
 brain=Brain()
 
-def which_state_global():
-    l=[brain,drop_brain_principal,grab_brain_principal,slide1,slide2,pump1,pump2,pump3,pump4,pump5,motors]
-    for s in l :
-        s.which_state()
 
-brain.flag=True
-while 1:
-    which_state_global()
-    motors.done=True
 
 

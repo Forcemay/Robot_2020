@@ -157,13 +157,52 @@ class Main_page(tk.Frame):#Page for the login
     def go_parameter(self):
         self.controller.show_frame(Parameter)
     def quit(self):  # functio to destroy
-        global main
+        global main,value_side,value_color
+        value_side=self.var_side.get()
+        value_color=self.var_col.get()
         print(self.var_col.get(),self.var_side.get())
 
         main.destroy()
 
+value_color=""
+value_side=""
 
 main = Main()
 main.mainloop()
+change=False
+if value_side=="Droit" :
+    number=2
+    number2=1
+else :
+    number=1
+    number2=1
+
+filename = 'value.csv'
+tempfile = NamedTemporaryFile(mode='w', delete=False)
+fields = ['Class', 'Nom', 'valeur']
+
+with open(filename, 'r') as csvfile, tempfile:
+
+    reader = csv.DictReader(csvfile, fieldnames=fields)
+    writer = csv.DictWriter(tempfile, fieldnames=fields)
+    for row in reader:
+        if row["Class"] == 'Grab'+str(number):
+            change=True
+    if change==True :
+        for row in reader:
+            if row["Class"] == 'Grab':
+                row['Class'], row['Nom'], row['valeur'] = "Grab"+str(number2), row['Nom'], row['valeur']
+            row2 = {'Class': row['Class'], 'Nom': row['Nom'], 'valeur': row['valeur']}
+
+            writer.writerow(row2)
+        for row in reader:
+            if row["Class"] == 'Grab'+str(number):
+                row['Class'], row['Nom'], row['valeur'] = "Grab", row['Nom'], row['valeur']
+            row2 = {'Class': row['Class'], 'Nom': row['Nom'], 'valeur': row['valeur']}
+
+            writer.writerow(row2)
+        shutil.move(tempfile.name, filename)
+
+
 
 
