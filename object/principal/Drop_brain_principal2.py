@@ -105,8 +105,13 @@ class Drop_brain_principal():
                             pump.order="un_active"
             else :
                 self.slide.order='height'
-            self.state = "move_zone"
-            self.sent = False
+            if self.move="ini":
+                self.order = "%"
+                self.move = "%"
+                self.state="un_active"
+            else :
+                self.state = "move_zone"
+                self.sent = False
 
 
 
