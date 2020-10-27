@@ -1,31 +1,28 @@
 import math
-# import RPi.Gpio as Gpio
+import RPi.GPIO as GPIO
 import time
-import csv
-# Gpio.cleanup()
-# Gpio.setwarnings(False)
+#GPIO.cleanup()
+GPIO.setwarnings(False)
 
+stepPin = 13
+dirPin = 19
+enPin = 26
 
-
-
+# GPIO setup
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(enPin,GPIO.OUT)
+GPIO.setup(stepPin,GPIO.OUT)
+GPIO.setup(dirPin,GPIO.OUT)
 
 class Slide():  # maybe this one is too much for nothing
-    def __init__(self,stepPin,dirPin,enPin):
+    def __init__(self):
         # change the rotation direction in check_move
-        self.stepPin = stepPin
-        self.dirPin = dirPin
-        self.enPin = enPin
         self.step=1000
         self.height=140
         self.low=100
         self.state="height"
         # order
         self.order = "%"
-        # Gpio setup
-        # Gpio.setmode(Gpio.BCM)
-        # Gpio.setup(self.enPin,Gpio.OUT)
-        # Gpio.setup(self.stepPin,Gpio.OUT)
-        # Gpio.setup(self.dirPin,Gpio.OUT)
 
 
     def which_state(self):
@@ -51,30 +48,23 @@ class Slide():  # maybe this one is too much for nothing
 
     def move(self, value):
         if value==1:
-            print("slide up")
-            # Gpio.output(dirPin, Gpio.HIGH)
+            GPIO.output(dirPin, GPIO.HIGH)
         else :
-            print("slide down")
-            # Gpio.output(dirPin, Gpio.LOW)
-        # for k in range(0, self.step):
-        #     Gpio.output(stepPin, Gpio.HIGH)
-        #     time.sleep(0.0009)
-        #     Gpio.output(stepPin, Gpio.LOW)
-        #     time.sleep(0.0009)
+            GPIO.output(dirPin, GPIO.LOW)
+        for k in range(0, self.step):
+            GPIO.output(stepPin, GPIO.HIGH)
+            time.sleep(0.0009)
+            GPIO.output(stepPin, GPIO.LOW)
+            time.sleep(0.0009)
 
 
 
-with open('value.csv', newline='') as csvfile:
-    reader = csv.DictReader(csvfile)
-    l1 = []
 
+slide = Slide()
 
-    for row in reader:
-        if row["Class"]=="Pin" :
-            if row["Nom"][0]=="s" :
-                l1.append(row["valeur"])
-l2=l1[0].split("/")
-l3=l1[1].split("/")
-slide1 = Slide(int(l2[0]),int(l2[1]),int(l2[2]))
-slide2 = Slide(int(l3[0]),int(l3[1]),int(l3[2]))
+slide.order="low"
 
+slide.which_state()
+slide.order="height"
+
+slide.which_state()
