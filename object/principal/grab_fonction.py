@@ -39,14 +39,16 @@ class Grab_move():
             self.motors.command(self.x-200,self.y,self.alpha)
 
     def avance(self):
-        self.state = "lever"
+        if (motors.x,motors.y,motors.alpha)==(self.x-200,self.y,self.alpha) :
+            self.state = "lever"
 
-        self.slide.order = "height"
+            self.slide.order = "height"
 
     def lever(self):
         self.state = "retour"
         self.motors.command(self.x,self.y,self.alpha)
 
     def retour(self):
-        self.order="%"
+        if (motors.x,motors.y,motors.alpha)==(self.x,self.y,self.alpha) :
+            self.order="%"
 

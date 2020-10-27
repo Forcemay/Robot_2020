@@ -15,6 +15,8 @@ class Grab_brain_principal():
             self.list_change = []
             self.list_grab2=[]
             self.list_end = []
+            self.wait=False
+            self.wait_list=[]
 
             self.sent=False
             for row in reader:
@@ -59,11 +61,13 @@ class Grab_brain_principal():
 
     def ini(self):
         global motors
-        if len(self.list_ini)>0 :
-            list=self.list_ini.pop()
-            motors.command(int(list[0]),int(list[1]),int(list[2]))
-        else :
+        if len(self.list_ini)>0 and self.wait==False:
+            self.wait_list=self.list_ini.pop()
+            motors.command(int(self.wait_list[0]),int(self.wait_list[1]),int(self.wait_list[2]))
+            self.wait=True
+        elif (motors.x, motors.y, motors.alpha)==(int(self.wait_list[0]),int(self.wait_list[1]),int(self.wait_list[2]))
             self.state = "grab1"
+            self.wait=False
             list=self.list_grab1[0]
             motors.command(int(list[0]), int(list[1]), int(list[2]))
     def grab1(self):
@@ -73,7 +77,7 @@ class Grab_brain_principal():
             self.grab1_object.order="grab"
             self.sent=True
         else :
-            if self.grab1_object.state=="retour":
+            if self.grab1_object.state=="retour" and self.grab1_object.order=="%":
                 self.state='change'
                 self.sent=False
             else :
@@ -81,10 +85,12 @@ class Grab_brain_principal():
 
     def change(self):
         global motors
-        if len(self.list_change) > 0:
-            list = self.list_change.pop()
-            motors.command(int(list[0]), int(list[1]), int(list[2]))
-        else:
+        if len(self.list_change) > 0 and self.wait==False:
+            self.wait=True
+            self.wait_list = self.list_change.pop()
+            motors.command(int(self.wait_list[0]), int(self.wait_list[1]), int(self.wait_list[2]))
+        elif (motors.x, motors.y, motors.alpha)==(int(self.wait_list[0]),int(self.wait_list[1]),int(self.wait_list[2])):
+            self.wait=False
             self.state = "grab2"
             list = self.list_grab2[0]
             motors.command(int(list[0]), int(list[1]), int(list[2]))
@@ -96,7 +102,7 @@ class Grab_brain_principal():
             self.grab2_object.order="grab"
             self.sent=True
         else :
-            if self.grab2_object.state=="retour":
+            if self.grab2_object.state=="retour" and self.grab2_object.order=="%":
                 self.state='change'
                 self.sent=False
             else :
@@ -104,10 +110,12 @@ class Grab_brain_principal():
 
     def end(self):
         global motors
-        if len(self.list_end) > 0:
-            list = self.list_end.pop()
-            motors.command(int(list[0]), int(list[1]), int(list[2]))
-        else:
+        if len(self.list_end) > 0 and self.wait==False:
+            self.wait=True
+            self.wait_list = self.list_end.pop()
+            motors.command(int(self.wait_list[0]), int(self.wait_list[1]), int(self.wait_list[2]))
+        elif (motors.x, motors.y, motors.alpha) == (int(self.wait_list[0]), int(self.wait_list[1]), int(self.wait_list[2])):
+            self.wait=False
             self.state = "fini"
     def fini(self):
         self.order="%"
