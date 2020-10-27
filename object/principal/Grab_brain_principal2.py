@@ -7,7 +7,7 @@ class Grab_brain_principal():
             self.color=["red","green","red","green","red"]
         else :
             self.color2=["green","red","green","red","green"]
-        self.state="ini"
+        self.state="un_active"
         with open('value.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             self.list_ini = []
